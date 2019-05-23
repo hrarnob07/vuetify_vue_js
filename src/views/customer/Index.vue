@@ -5,16 +5,13 @@
       <v-flex xs12>
         <v-card>
                  <v-toolbar flat color="white">
-                     <v-toolbar-title>Vehicle List</v-toolbar-title>
+                     <v-toolbar-title>Customer List</v-toolbar-title>
                      <v-spacer></v-spacer>
-               <v-btn color="warning" small round outline @click="link">
-                  <v-icon left >list</v-icon>
+               <!-- <v-btn color="primary" dark @click="link">
+                  <v-icon left dark>list</v-icon>
                     Repairable vehicles
-               </v-btn>
-               <v-btn color="warning" small round outline @click="link">
-                 <v-icon left >add</v-icon>
-                      New vehicle entry
-               </v-btn>
+               </v-btn> -->
+               
              </v-toolbar>
         </v-card>
       </v-flex>
@@ -26,21 +23,23 @@
       <v-card>
          <v-data-table
                 :headers="headers"
-                :items="vehicles.data"
+                :items="vehicleOwners.data"
                 class="elevation-1">
                 <template v-slot:items="props">
                   <td class="text-xs-left">{{props.index +1}}</td>
-                <td class="text-xs-left"><span>{{ props.item.model }}</span> -  <span pl-2>{{ props.item.color }}</span>  - <span>{{ props.item.year }}</span></td>
-                <td class="text-xs-left">{{ props.item.brta_registration_no }}</td>
-                <td class="text-xs-left">{{ props.item.name }}</td>
-                <td class="text-xs-left">{{ props.item.created_at }}</td>
-                <td class="justify-center layout pt-3">
+                <td class="text-xs-left"><span>{{ props.item.name }}</span> </td>
+                <td class="text-xs-left">{{ props.item.email }}</td>
+                <td class="text-xs-left">{{ props.item.phone }}</td>
+                <td class="text-xs-middle"> 
                     <v-tooltip top>  <template v-slot:activator="{ on }">
-                                         <span v-on="on"> <v-icon  small color="teal darken-2" class="mr-2" @click="editItem(props.item)"  >edit </v-icon>
+                                         <span v-on="on"> <v-icon  small color="teal darken-2" class="mr-2" @click="vehicleDetails(props.item)"  > info </v-icon>
                                           </span>
                                           </template>
-                       <span>Edit vehicle</span>
+                       <span>Vehicle detials</span>
                     </v-tooltip>
+                    </td>
+                <td class="text-xs-middle">
+                   
 
                      <v-tooltip top>  <template v-slot:activator="{ on }">
                                          <span v-on="on"> <v-icon  small  class="mr-2" color="blue darken-2" @click="billDetails(props.item)"  >info </v-icon>
@@ -71,27 +70,27 @@
         headers: [
           { text: 'SN.', sortable:false, value: '' },
           {
-            text: 'Model Name',value: 'model'
+            text: 'Name',value: 'model'
           },
 
-          { text: 'BRTA registration no', value: 'brta_registration_no' },
-          { text: 'Customer Name', value: '' },
-          { text: 'Registration Date', value: '' },
-          { text: 'Action', value: '' }
+          { text: 'Email', value: 'brta_registration_no' },
+          { text: 'Phone No', value: '' },
+          { text: 'Vehicle Details', value: '' },
+          { text: 'Bill Details', value: '' }
           
         ],
         
-        vehicles:{}
+        vehicleOwners:{}
       }
     },
 
     methods: {
 
-            index(page = 1) {
-                this.axios.get('vehicle/index?page=' + page)
+           index(page = 1) {
+                this.axios.get('user/vehicle-owners?page=' + page)
                     .then(response => {
-                        this.vehicles = response.data.vehicles;
-                        console.log(this.vehicles);
+                        this.vehicleOwners = response.data.vehicleOwners;
+                        console.log( this.vehicleOwners);
                     });
             },
             editItem(index){

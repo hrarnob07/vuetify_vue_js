@@ -3,11 +3,11 @@
     <v-container fluid pa-0 fill-height>
       <v-layout>
         <v-flex>
-          <v-navigation-drawer permanent v-if="drawer">
-            <v-toolbar flat>
-              <v-list>
-                <v-list-tile>
-                  <v-list-tile-title class="title">Application</v-list-tile-title>
+          <v-navigation-drawer width="275px" permanent v-if="drawer">
+            <v-toolbar flat dark>
+              <v-list >
+                <v-list-tile >
+                  <v-list-tile-title  class="title">Application</v-list-tile-title>
                 </v-list-tile>
               </v-list>
             </v-toolbar>
@@ -30,14 +30,17 @@
         <v-flex xs12>
           <v-layout row>
             <v-flex>
-              <v-toolbar>
+              <v-toolbar dark>
                 <v-toolbar-side-icon @click="drawer=!drawer"></v-toolbar-side-icon>
-                <v-toolbar-title>Title</v-toolbar-title>
+                
                 <v-spacer></v-spacer>
-                <v-toolbar-items class="hidden-sm-and-down">
-                  <v-btn flat>Link One</v-btn>
-                  <v-btn flat>Link Two</v-btn>
-                  <v-btn flat>Link Three</v-btn>
+                <v-toolbar-items dark class=" hidden-sm-and-down">
+                  <v-btn flat small  >Profile</v-btn>
+                    
+                 <v-spacer></v-spacer>
+                  <v-btn flat small  > Logout 
+                    <v-icon flat small >arrow_forward_ios</v-icon>
+                  </v-btn>
                 </v-toolbar-items>
               </v-toolbar>
             </v-flex>
@@ -66,9 +69,45 @@ export default {
           route: "home"
         },
         {
+          title: "Bill Create",
+          icon: "present_to_all",
+          route: "bill-create"
+        },
+        {
+          title: "Bill List",
+          icon: "collections",
+          route: "bill-list"
+        },
+        {
           title: "Vehicle",
           icon: "question_answer",
           route: "vehiche"
+        },
+         {
+          title: "Customer",
+          icon: "perm_identity",
+          route: "customer"
+        },
+        
+         {
+          title: "Products and services",
+          icon: "business_center",
+          route: "product-services"
+        },
+         {
+          title: "Technician",
+          icon: "perm_identity",
+          route: "technician"
+        },
+        {
+          title: "Vehicle Type",
+          icon: "time_to_leave",
+          route: "vehicle-type"
+        },
+        {
+          title: "Transactions",
+          icon: "time_to_leave",
+          route: "transactions"
         },
         {
           title: "About",
