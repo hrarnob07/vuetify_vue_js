@@ -7,10 +7,14 @@
                  <v-toolbar flat color="white">
                      <v-toolbar-title>Customer List</v-toolbar-title>
                      <v-spacer></v-spacer>
-               <!-- <v-btn color="primary" dark @click="link">
-                  <v-icon left dark>list</v-icon>
-                    Repairable vehicles
-               </v-btn> -->
+               <v-flex xs6>
+        <v-text-field  v-model="url" label="search">
+          <v-btn slot="append" >
+            <v-icon  color="warning" >search</v-icon>
+            
+          </v-btn>
+        </v-text-field>
+      </v-flex>
                
              </v-toolbar>
         </v-card>
