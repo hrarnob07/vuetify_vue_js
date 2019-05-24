@@ -6,7 +6,7 @@
           <v-toolbar flat color="white">
             <v-toolbar-title>Products and services</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn color="warning" small round outline @click="link()">
+            <v-btn color="warning" small round outline :to="{name:'product-services.create'}">
                   <v-icon left dark>add</v-icon>
                    Add Products and Services
             </v-btn>

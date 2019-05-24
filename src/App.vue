@@ -80,7 +80,7 @@ export default {
         },
         {
           title: "Vehicle",
-          icon: "question_answer",
+          icon: "directions_car",
           route: "vehiche"
         },
          {
@@ -96,7 +96,7 @@ export default {
         },
          {
           title: "Technician",
-          icon: "perm_identity",
+          icon: "supervisor_account",
           route: "technician"
         },
         {
@@ -106,12 +106,12 @@ export default {
         },
         {
           title: "Transactions",
-          icon: "time_to_leave",
+          icon: "credit_card",
           route: "transactions"
         },
         {
           title: "About",
-          icon: "question_answer",
+          icon: "info",
           route: "about"
         }
       ],

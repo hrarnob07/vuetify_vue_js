@@ -7,9 +7,9 @@
                  <v-toolbar flat color="white">
                      <v-toolbar-title>Customer List</v-toolbar-title>
                      <v-spacer></v-spacer>
-               <v-flex xs6>
+        <v-flex xs4>
         <v-text-field  v-model="url" label="search">
-          <v-btn slot="append" >
+          <v-btn flat small slot="append" >
             <v-icon  color="warning" >search</v-icon>
             
           </v-btn>

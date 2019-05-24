@@ -7,7 +7,7 @@
                  <v-toolbar flat color="white">
                      <v-toolbar-title>Vehicle Type</v-toolbar-title>
                      <v-spacer></v-spacer>
-               <v-btn color="warning"  round outline  @click="link">
+               <v-btn color="warning"  round outline  :to="{name:'vehicleType.create'}" >
                   <v-icon left>add</v-icon>
                    Add New Vehicle Type
                </v-btn>
@@ -30,8 +30,8 @@
                 <td class="text-xs-left"><span>{{ props.item.title }}</span> </td>
                 
                 <td class="text-xs-left"> 
-                    <v-tooltip top>  <template v-slot:activator="{ on }">
-                                         <span v-on="on"> <v-icon  small color="teal darken-2" class="mr-2" @click="vehicleDetails(props.item)"  > edit </v-icon>
+                    <v-tooltip top >  <template v-slot:activator="{ on }">
+                                         <span v-on="on"> <v-icon  small color="teal darken-2" class="mr-2" @click="EditVehicleType(props.item.vehicle_types_id)"  > edit </v-icon>
                                           </span>
                                           </template>
                        <span>Edit Vehicle type</span>
@@ -89,8 +89,9 @@
                         this.vehicleTypes=response.data.vehicleTypes;
                     });
             },
-            editItem(index){
-              alert(index);
+            EditVehicleType(index){
+               
+                this.$router.push({name:"vehicleType.edit",params:{id:index}});
 
             }
         },
