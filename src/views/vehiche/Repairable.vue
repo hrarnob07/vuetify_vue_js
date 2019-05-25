@@ -5,16 +5,15 @@
       <v-flex xs12>
         <v-card>
                  <v-toolbar flat color="white">
-                     <v-toolbar-title>Vehicle List</v-toolbar-title>
+                     <v-toolbar-title>Repairable vehicle list</v-toolbar-title>
                      <v-spacer></v-spacer>
-              <v-btn color="warning" small round outline :to="{name:'repairable.index'}">
-                  <v-icon left >list</v-icon>
-                    Repairable vehicles
-               </v-btn>
-               <v-btn color="warning" small round outline :to="{name:'vehiche.create'}">
-                 <v-icon left >add</v-icon>
-                      New vehicle entry
-               </v-btn>
+                  <v-flex xs4>
+                    <v-text-field  v-model="url" label="search">
+                    <v-btn flat small slot="append" >
+                        <v-icon  color="warning" >search</v-icon>                       
+                    </v-btn>
+                    </v-text-field>
+                </v-flex>
              </v-toolbar>
         </v-card>
       </v-flex>
@@ -32,8 +31,8 @@
                   <td class="text-xs-left">{{props.index +1}}</td>
                 <td class="text-xs-left"><span>{{ props.item.model }}</span> -  <span pl-2>{{ props.item.color }}</span>  - <span>{{ props.item.year }}</span></td>
                 <td class="text-xs-left">{{ props.item.brta_registration_no }}</td>
-                <td class="text-xs-left">{{ props.item.name }}</td>
-                <td class="text-xs-left">{{ props.item.created_at}}</td>
+                <td class="text-xs-left">{{ props.item.condition }}</td>
+                <td class="text-xs-left">{{ props.item.problem_details}}</td>
                 <td class="justify-center layout pt-3">
                     <v-tooltip top>  <template v-slot:activator="{ on }">
                                          <span v-on="on"> <v-icon  small color="teal darken-2" class="mr-2" @click="editItem(props.item)"  >edit </v-icon>
@@ -46,7 +45,14 @@
                                          <span v-on="on"> <v-icon  small  class="mr-2" color="blue darken-2" @click="billDetails(props.item)"  >info </v-icon>
                                           </span>
                                           </template>
-                       <span>Vehicle Bill details </span>
+                       <span>Vehicle  details </span>
+                    </v-tooltip>
+
+                     <v-tooltip top>  <template v-slot:activator="{ on }">
+                                         <span v-on="on"> <v-icon  small  class="mr-2" color="blue darken-2" @click="billDetails(props.item)"  >redeem </v-icon>
+                                          </span>
+                                          </template>
+                       <span>Voucher  details </span>
                     </v-tooltip>
 
 
@@ -75,8 +81,8 @@
           },
 
           { text: 'BRTA registration no', value: 'brta_registration_no' },
-          { text: 'Customer Name', value: '' },
-          { text: 'Registration Date', value: '' },
+          { text: 'Condition', value: 'condition' },
+          { text: 'Problem', value: 'problem_details' },
           { text: 'Action', value: '' }
           
         ],
@@ -88,10 +94,10 @@
     methods: {
 
             index(page = 1) {
-                this.axios.get('vehicle/index?page=' + page)
+                 this.axios.get('vehicle-entries/repairable-vehicles?page=' + page)
                     .then(response => {
                         this.vehicles = response.data.vehicles;
-                        console.log(this.vehicles);
+                        console.log(response);
                     });
             },
             editItem(index){

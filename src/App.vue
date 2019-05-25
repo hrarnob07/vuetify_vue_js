@@ -66,57 +66,65 @@ export default {
         {
           title: "Home",
           icon: "dashboard",
-          route: "home"
+          route: "/home"
         },
         {
           title: "Bill Create",
           icon: "present_to_all",
-          route: "bill-create"
+          route: "/bill-create"
         },
         {
           title: "Bill List",
           icon: "collections",
-          route: "bill-list"
+          route: "/bill-list"
         },
         {
           title: "Vehicle",
           icon: "directions_car",
-          route: "vehiche"
+          route: "/vehiche"
         },
          {
           title: "Customer",
           icon: "perm_identity",
-          route: "customer"
+          route: "/customer"
         },
         
          {
           title: "Products and services",
           icon: "business_center",
-          route: "product-services"
+          route: "/product-services"
         },
          {
           title: "Technician",
           icon: "supervisor_account",
-          route: "technician"
+          route: "/technician"
         },
         {
           title: "Vehicle Type",
           icon: "time_to_leave",
-          route: "vehicle-type"
+          route: "/vehicle-type"
         },
         {
           title: "Transactions",
           icon: "credit_card",
-          route: "transactions"
+          route: "/transactions"
         },
         {
           title: "About",
           icon: "info",
-          route: "about"
+          route: "/about"
         }
       ],
       right: null
     };
+  },
+  methods:{
+     changeRoute(routeName) {
+      const vm = this;
+      return vm.$router.push({ name: routeName });
+    }
+
   }
+
 };
 </script>

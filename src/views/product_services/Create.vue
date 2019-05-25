@@ -25,6 +25,7 @@
                         data-vv-name="name"
                         :error-messages="errors.collect('name')"
                       > 
+                       <v-icon slot="append" small color="black" >edit</v-icon>
                       </v-text-field>
                     </v-flex>
                   </v-layout>
@@ -51,6 +52,7 @@
                         placeholder="TK"
                         :error-messages="errors.collect('price')"
                       > 
+                       <v-icon slot="append" small color="black" >edit</v-icon>
                       </v-text-field>
                     </v-flex>
                   </v-layout>
@@ -70,6 +72,7 @@
                         placeholder="NA"
                         :error-messages="errors.collect('remarks')"
                       > 
+                       <v-icon slot="append" small color="black" >edit</v-icon>
                       </v-text-field>
                     </v-flex>
                   </v-layout>

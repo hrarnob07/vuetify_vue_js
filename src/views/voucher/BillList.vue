@@ -6,10 +6,14 @@
           <v-toolbar flat color="white">
             <v-toolbar-title>Bill List</v-toolbar-title>
             <v-spacer></v-spacer>
-            <!-- <v-btn color="warning" small round outline @click="link">
-                  <v-icon left >add</v-icon>
-                   Add Technician
-            </v-btn> -->
+            <v-flex xs4>
+            <v-text-field  v-model="url" label="search" placeholder="Registration No">
+              <v-btn flat small slot="append" >
+                <v-icon  color="warning" >search</v-icon>
+                
+              </v-btn>
+            </v-text-field>
+          </v-flex>
           </v-toolbar>
         </v-card>
       </v-flex>

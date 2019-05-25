@@ -25,6 +25,7 @@
                         data-vv-name="name"
                         :error-messages="errors.collect('name')"
                       > 
+                       <v-icon slot="append" small color="black" >edit</v-icon>
                       </v-text-field>
                     </v-flex>
                   </v-layout>
@@ -41,6 +42,7 @@
                         placeholder="zz@zz.com"
                         :error-messages="errors.collect('email')"
                       > 
+                      <v-icon slot="append" small color="black" >edit</v-icon>
                       </v-text-field>
                     </v-flex>
                   </v-layout>
@@ -57,6 +59,7 @@
                         placeholder="+880"
                         :error-messages="errors.collect('mobile_no')"
                       > 
+                      <v-icon slot="append" small color="black" >edit</v-icon>
                       </v-text-field>
                     </v-flex>
                   </v-layout>
@@ -73,13 +76,14 @@
                         :error-messages="errors.collect('address')"
                         placeholder="Dhaka -bangladesh"
                       > 
+                      <v-icon slot="append" small color="black" >edit</v-icon>
                       </v-text-field>
                     </v-flex>
                   </v-layout>
 
                   <v-layout>
                     <v-flex sm6 xs12 md12 offset-sm1 offset-xm1>
-                      <v-btn right class="primary" type="submit">Submit</v-btn>
+                      <v-btn right :loading="loading" :disabled="loading" class="primary" type="submit">Submit</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-form>
@@ -119,6 +123,7 @@ export default {
                 color:"success",
                 text:"",
                 timeout:6000,
+                loading:false,
 
 
                 
@@ -127,15 +132,18 @@ export default {
         },
   methods: {
     store_technician() {
+        this.loading=true
         if(this.techinican.name==""){
             this.text="Please enter valid data";
             this.snackbar=true;
             this.color="error";
         }
         else{
+             
              this.axios
                  .post('technician/create', this.techinican)
                  .then(response => {
+                       
                        this.response = response.data;
            
                        if(this.response.status !== 400)

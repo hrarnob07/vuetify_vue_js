@@ -22,10 +22,21 @@ export default new Router({
       name: 'bill.create',
       component: () => import('../views/voucher/BillCreate.vue')
     },
+    // vehicle 
     {
       path: '/vehiche',
       name: 'vehiche.index',
       component: () => import('../views/vehiche/Index.vue')
+    },
+    {
+      path: '/vehiche/create',
+      name: 'vehiche.create',
+      component: () => import('../views/vehiche/VehicleEntry.vue')
+    },
+    {
+      path: '/vehiche/repairable',
+      name: 'repairable.index',
+      component: () => import('../views/vehiche/Repairable.vue')
     },
     {
       path: '/customer',

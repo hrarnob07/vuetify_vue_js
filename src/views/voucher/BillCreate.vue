@@ -4,7 +4,7 @@
       <v-flex xs12>
         <v-card>
           <v-toolbar flat color="white">
-            <v-toolbar-title>Bill List</v-toolbar-title>
+            <v-toolbar-title>Bill create</v-toolbar-title>
             <v-spacer></v-spacer>
             <!-- <v-btn color="warning" small round outline @click="link">
                   <v-icon left >add</v-icon>
