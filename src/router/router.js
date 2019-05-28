@@ -22,6 +22,17 @@ export default new Router({
       name: 'bill.create',
       component: () => import('../views/voucher/BillCreate.vue')
     },
+    {
+      path: '/voucher-report/:id',
+      name: 'voucher.report',
+      component: () => import('../views/voucher/Report.vue')
+    },
+    {
+      path: '/voucher/create/:id',
+      name: 'voucherreport.create',
+      component: () => import('../views/voucher/Create.vue')
+    },
+
     // vehicle 
     {
       path: '/vehiche',

@@ -159,7 +159,7 @@
                        <v-select
                         :items="technicians"
                         v-model="vehicle.mechanic_id"
-                        label="Vehicle Type"
+                        label="Assign to Technician"
                         ></v-select> 
                     </v-flex>
 
@@ -257,10 +257,20 @@ export default {
   },
   methods: {
     registration(index) {
-        this.vehicle=this.seletedVehicle[index];
-        this.vehicle.mobile_no=this.seletedVehicle[index].phone;
-        this.vehicle.customer_name=this.seletedVehicle[index].name;
-       this.seletedVehicle=[];
+
+      console.log(this.seletedVehicle[index]);
+      this.vehicle.brta_registration_no=this.seletedVehicle[index].brta_registration_no;
+      this.vehicle.color=this.seletedVehicle[index].color;
+      this.vehicle.model=this.seletedVehicle[index].model;
+      this.vehicle.remarks=this.seletedVehicle[index].remarks;
+      this.vehicle.year=this.seletedVehicle[index].year;
+      this.vehicle.vehicles_id=this.seletedVehicle[index].vehicles_id;
+      this.vehicle.fk_vehicles_types_id=this.seletedVehicle[index].fk_vehicles_types_id;
+      this.vehicle.vehicle_types_id=this.seletedVehicle[index].fk_vehicles_types_id;
+      this.vehicle.brta_registration_no=this.seletedVehicle[index].brta_registration_no;
+      this.vehicle.mobile_no=this.seletedVehicle[index].phone;
+      this.vehicle.customer_name=this.seletedVehicle[index].name;
+      this.seletedVehicle=[];
     },
       getdata(){
         
@@ -299,54 +309,56 @@ export default {
 
     store_vehicle() {
         console.log(this.vehicle);
-    //   this.loading = true;
-    //   if (this.vehicle.brta_registration_no == "") {
-    //     this.text = "Please enter valid data";
-    //     this.snackbar = true;
-    //     this.color = "error";
-    //   } else {
-    //     this.axios
-    //       .post("vehicle-entries/store", this.vehicle)
-    //       .then(response => {
-    //        this.response = response.data;
+      this.loading = true;
+      if (this.vehicle.brta_registration_no == "") {
+        this.text = "Please enter valid data";
+        this.snackbar = true;
+        this.color = "error";
+        this.loading = false;
+      } else {
+        this.axios
+          .post("vehicle-entries/store", this.vehicle)
+          .then(response => {
+            this.loading = false;
+           this.response = response.data;
 
-    //       if(this.response.status =="exist"){
-    //           // console.log(response.data.data)
-    //           this.text = "Vehicle is in repairing state";
-    //           this.snackbar = true;
-    //           this.color = "info";
+          if(this.response.status =="exist"){
+              // console.log(response.data.data)
+              this.text = "Vehicle is in repairing state";
+              this.snackbar = true;
+              this.color = "info";
 
-    //           if(confirm("Vehicle is in repairing state.\nAre you want to see voucher details?")){
-    //             //  this.$router.push({name:"vehicle.voucher.show",params: { id: response.data.data.vouchers_id}});
-    //             }
+              if(confirm("Vehicle is in repairing state.\nAre you want to see voucher details?")){
+                //  this.$router.push({name:"vehicle.voucher.show",params: { id: response.data.data.vouchers_id}});
+                }
             
              
-    //        }
+           }
            
-    //       else if (this.response.status == "ok") {
-    //           alert("added.");
-    //         // console.log(this.response.data.vehicle_entries_id);
-    //         // this.$toast.success(this.response.message);
-    //         // this.resetForm(this.vehicleEntries);
-    //         // {name:'vehicle.voucher',params:{id:vehicletypeItem.vehicle_entries_id}}" class="btn btn-primary btn-xs btn-flat "> <i class="fa fa-edit">
-    //         // this.$router.push({name:"vehicle.voucher",params:{id:this.response.data.vehicle_entries_id}});
+          else if (this.response.status == "ok") {
+              alert("added.");
+            // console.log(this.response.data.vehicle_entries_id);
+            // this.$toast.success(this.response.message);
+            // this.resetForm(this.vehicleEntries);
+            // {name:'vehicle.voucher',params:{id:vehicletypeItem.vehicle_entries_id}}" class="btn btn-primary btn-xs btn-flat "> <i class="fa fa-edit">
+            // this.$router.push({name:"vehicle.voucher",params:{id:this.response.data.vehicle_entries_id}});
             
-    //       } else {
+          } else {
               
-    //           this.text = "Please Try again later !";
-    //           this.snackbar = true;
-    //           this.color = "error";
+              this.text = "Please Try again later !";
+              this.snackbar = true;
+              this.color = "error";
            
-    //        }
+           }
 
             
-    //       })
-    //       .catch(error => {
-    //         this.text = "Please Try agian latter";
-    //         this.snackbar = true;
-    //         this.color = "error";
-    //       });
-    //   }
+          })
+          .catch(error => {
+            this.text = "Please Try agian latter";
+            this.snackbar = true;
+            this.color = "error";
+          });
+      }
     }
   },
 

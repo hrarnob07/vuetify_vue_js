@@ -8,7 +8,7 @@
                      <v-toolbar-title>Repairable vehicle list</v-toolbar-title>
                      <v-spacer></v-spacer>
                   <v-flex xs4>
-                    <v-text-field  v-model="url" label="search">
+                    <v-text-field  v-model="vehicles.brta_registration_no" label="search">
                     <v-btn flat small slot="append" >
                         <v-icon  color="warning" >search</v-icon>                       
                     </v-btn>
@@ -28,12 +28,12 @@
                 :items="vehicles.data"
                 class="elevation-1">
                 <template v-slot:items="props">
-                  <td class="text-xs-left">{{props.index +1}}</td>
-                <td class="text-xs-left"><span>{{ props.item.model }}</span> -  <span pl-2>{{ props.item.color }}</span>  - <span>{{ props.item.year }}</span></td>
-                <td class="text-xs-left">{{ props.item.brta_registration_no }}</td>
-                <td class="text-xs-left">{{ props.item.condition }}</td>
-                <td class="text-xs-left">{{ props.item.problem_details}}</td>
-                <td class="justify-center layout pt-3">
+                  <td class="text-xs-left" v-if="props.item.vouchers_id!=null">{{props.index +1}}</td>
+                <td class="text-xs-left" v-if="props.item.vouchers_id!=null"><span>{{ props.item.model }}</span> -  <span pl-2>{{ props.item.color }}</span>  - <span>{{ props.item.year }}</span></td>
+                <td class="text-xs-left" v-if="props.item.vouchers_id!=null">{{ props.item.brta_registration_no }}</td>
+                <td class="text-xs-left" v-if="props.item.vouchers_id!=null">{{ props.item.condition }}</td>
+                <td class="text-xs-left" v-if="props.item.vouchers_id!=null">{{ props.item.problem_details}}</td>
+                <td class="justify-center layout pt-3" v-if="props.item.vouchers_id!=null">
                     <v-tooltip top>  <template v-slot:activator="{ on }">
                                          <span v-on="on"> <v-icon  small color="teal darken-2" class="mr-2" @click="editItem(props.item)"  >edit </v-icon>
                                           </span>

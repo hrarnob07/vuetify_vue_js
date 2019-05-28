@@ -101,7 +101,7 @@ export default {
         },
         {
           title: "Vehicle Type",
-          icon: "time_to_leave",
+          icon: "motorcycle",
           route: "/vehicle-type"
         },
         {

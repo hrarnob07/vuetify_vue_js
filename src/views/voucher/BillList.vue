@@ -7,7 +7,7 @@
             <v-toolbar-title>Bill List</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-flex xs4>
-            <v-text-field  v-model="url" label="search" placeholder="Registration No">
+            <v-text-field  v-model="vehicles.brta_registration_no" label="search" placeholder="Registration No">
               <v-btn flat small slot="append" >
                 <v-icon  color="warning" >search</v-icon>
                 
@@ -22,19 +22,19 @@
     <v-layout pa-2 ma-1>
       <v-flex xs12>
         <v-card>
-          <v-data-table :headers="headers" :items="vehicles.data" class="elevation-1">
+          <v-data-table :headers="headers" :search="search" :items="vehicles.data" class="elevation-1"  hide-actions :pagination.sync="pagination">
             <template v-slot:items="props">
              
-              <td class="text-xs-left">{{ props.index + 1}}</td>  
-              <td class="justify-center layout pt-3 ">
+              <td class="text-xs-left" v-if="props.item.vouchers_id!=null">{{ props.index + 1}}</td>
+              <td class="justify-center layout pt-3 " v-if="props.item.vouchers_id!=null">
                 <span small >{{ props.item.model }}</span> - <span small>{{ props.item.color }}</span> - <span small>{{ props.item.year }}</span>
               </td>
-              <td class="text-xs-left">{{ props.item.brta_registration_no }}</td>
-              <td class="text-xs-left"><span v-if="props.item.amount >=(props.item.totalAmount-props.item.discount)" style="color:green">Paid</span>  <span v-if="props.item.amount <(props.item.totalAmount-props.item.discount)" style="color:red">Due</span></td>
-              <td class="text-xs-left"><span v-if="props.item.status<=0" style="color:red">Repairng</span>  <span v-if="props.item.status>0" style="color:green">Repaired</span></td>
-              <td class="text-xs-left">{{ props.item.created_at | moment(" Do MMMM  YYYY - h:mm a") }}</td>
-                <td class="text-xs-left"><span>{{props.item.amount>0?props.item.amount:"0"}}</span> / <span >{{props.item.totalAmount>0?props.item.totalAmount:"0"}}</span></td>
-              <td class="text-xs-left">
+              <td class="text-xs-left" v-if="props.item.vouchers_id!=null">{{ props.item.brta_registration_no }}</td>
+              <td class="text-xs-left" v-if="props.item.vouchers_id!=null"><span v-if="props.item.amount >=(props.item.totalAmount-props.item.discount)" style="color:green">Paid</span>  <span v-if="props.item.amount <(props.item.totalAmount-props.item.discount)" style="color:red">Due</span></td>
+              <td class="text-xs-left" v-if="props.item.vouchers_id!=null"><span v-if="props.item.status<=0" style="color:red">Repairng</span>  <span v-if="props.item.status>0" style="color:green">Repaired</span></td>
+              <td class="text-xs-left" v-if="props.item.vouchers_id!=null">{{ props.item.created_at}} </td>
+                <td class="text-xs-left" v-if="props.item.vouchers_id!=null"><span>{{props.item.amount>0?props.item.amount:"0"}}</span> / <span >{{props.item.totalAmount>0?props.item.totalAmount:"0"}}</span></td>
+              <td class="text-xs-left" v-if="props.item.vouchers_id!=null">
                 <v-tooltip top>
                   <template v-slot:activator="{ on }">
                     <span v-on="on">
@@ -42,8 +42,8 @@
                         small
                         color="teal darken-2"
                         class="mr-2"
-                        @click="vehicleDetails(props.item)"
-                      >info</v-icon>
+                        @click="OnVoucherReport(props.item.vouchers_id)"
+                      >slideshow</v-icon>
                     </span>
                   </template>
                   <span>Voucher Information</span>
@@ -52,6 +52,13 @@
              
             </template>
           </v-data-table>
+          <v-layout row justify-center>
+            <div class="text-xs-center pt-2">
+              <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+            </div>
+
+
+          </v-layout>
         </v-card>
       </v-flex>
     </v-layout>
@@ -76,7 +83,11 @@ export default {
         { text: "Paid/Bill amount", sortable:false, value: "" },
         { text: "Details",sortable:false, value: "" },
       ],
-
+      search: '',
+      pagination: {
+        rowsPerPage: 10
+      },
+      selected: [],
       vehicles: {},
       storeVehicles:{},
       registration_no:"",
@@ -94,6 +105,12 @@ export default {
                         console.log(response.data.voucher.data);
                     });
             },
+
+          OnVoucherReport(voucherId)
+          {
+
+            this.$router.push({name:"voucher.report",params:{id:voucherId}});
+          },
 
             vehicleFilter()
             {
@@ -148,6 +165,17 @@ export default {
 
         this.index();
             
-        }
+        },
+
+  computed: {
+    pages () {
+      if (this.pagination.rowsPerPage == null || this.pagination.totalItems == null)
+      {return 0}
+      else{
+        return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+      }
+
+    }
+  }
 };
 </script>

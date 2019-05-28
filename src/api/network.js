@@ -1,6 +1,6 @@
 import client from '../config/client'
 
-export const callToServer = (method, url, data) => {
+export const callToServer = (method, url, data=null) => {
     return new Promise((resolve, reject) => {
         client.call(method, url, data).then(res => {
             resolve(res.data)

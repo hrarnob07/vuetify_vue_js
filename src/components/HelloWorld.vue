@@ -42,6 +42,7 @@
 
 <script>
     import FileSaver from 'file-saver';
+    import VehicleTypeService from '../services/VehicleTypeService';
     import {getUser} from '../api/user'
 
     export default {
@@ -83,12 +84,22 @@
             getButtonClicked() {
                 return this.$store.state.buttonClicked
             }
+
         },
         async mounted() {
             await getUser({name: 'name data'}).then(res=>{
                 console.log(res)
             }).catch(err=>{
                 console.log(err)
+            });
+
+
+        },
+        created() {
+            VehicleTypeService.getAllVhicleType().then(res=>{
+                console.log(res)
+            }).catch(err=>{
+                console.log(err);
             })
         }
     }

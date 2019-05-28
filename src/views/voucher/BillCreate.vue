@@ -1,34 +1,69 @@
 <template>
   <v-container grid-list-md text-xs-center>
-    <v-layout pa-2 ma-1>
+    <v-layout pa-2 ma-1 row warp>
       <v-flex xs12>
         <v-card>
           <v-toolbar flat color="white">
-            <v-toolbar-title>Bill create</v-toolbar-title>
+            <v-toolbar-title>Voucher create</v-toolbar-title>
             <v-spacer></v-spacer>
-            <!-- <v-btn color="warning" small round outline @click="link">
-                  <v-icon left >add</v-icon>
-                   Add Technician
-            </v-btn> -->
+          </v-toolbar>
+
+          <v-toolbar flat color="white">
+            <v-toolbar-title style="width:90%">
+              <v-menu style="width:100%"
+                      offset-y
+                      content-class="dropdown-menu"
+              >
+                <v-text-field
+                        slot="activator"
+                        label="Enter BRTA Registration No"
+                        v-model="brta_registration_no"
+                        v-on:keyup="getdata()"
+                        v-validate="'required|'"
+                        data-vv-as="Vehicle brta registration no"
+                        data-vv-name="brta_registration_no"
+                        :error-messages="errors.collect('brta_registration_no')"
+                >
+                </v-text-field>
+                <v-card >
+                  <v-list subheader  expand>
+
+                    <v-list-tile btn @click="vehicle.brta_registration_no=item.brta_registration_no;" v-for="(item, index) in seletedVehicle" :key="index">
+
+                      <v-list-tile-title btn @click="registration(index)">{{ item.brta_registration_no }}</v-list-tile-title>
+
+                    </v-list-tile>
+                  </v-list>
+                </v-card>
+              </v-menu>
+
+            </v-toolbar-title>
+            <v-btn small color="warning" outline round :to="{name:'voucherreport.create',params:{id:28}}">
+              <v-icon left>add_circle_outline</v-icon>
+              voucher create</v-btn>
           </v-toolbar>
         </v-card>
+
       </v-flex>
+
     </v-layout>
+
+
 
     <v-layout pa-2 ma-1>
       <v-flex xs12>
         <v-card>
           <v-data-table :headers="headers" :items="vehicles.data" class="elevation-1">
             <template v-slot:items="props">
-              <td class="text-xs-left">{{props.index +1}}</td>
-              <td class="justify-center layout pt-3 ">
+              <td class="text-xs-left" v-if="props.item.vouchers_id!=null">{{props.index +1}}</td>
+              <td class="justify-center layout pt-3 " v-if="props.item.vouchers_id!=null">
                 <span small >{{ props.item.model }}</span> - <span small>{{ props.item.color }}</span> - <span small>{{ props.item.year }}</span>
               </td>
-              <td class="text-xs-left">{{ props.item.brta_registration_no }}</td>
-              <td class="text-xs-left"><span v-if="props.item.status<=0" style="color:red">Repairng</span>  <span v-if="props.item.status>0" style="color:green">Repaired</span></td>
-              <td class="text-xs-left">{{ props.item.created_at | moment(" Do MMMM  YYYY - h:mm a") }}</td>
-              <td class="text-xs-middle">
-                <v-tooltip top>
+              <td class="text-xs-left" v-if="props.item.vouchers_id!=null">{{ props.item.brta_registration_no }}</td>
+              <td class="text-xs-left" v-if="props.item.vouchers_id!=null"><span v-if="props.item.status<=0" style="color:red">Repairng</span>  <span v-if="props.item.status>0" style="color:green">Repaired</span></td>
+              <td class="text-xs-left" v-if="props.item.vouchers_id!=null">{{ props.item.created_at | moment(" Do MMMM  YYYY - h:mm a") }}</td>
+              <td class="text-xs-middle" v-if="props.item.vouchers_id!=null">
+                <v-tooltip top >
                   <template v-slot:activator="{ on }">
                     <span v-on="on">
                       <v-icon
@@ -69,6 +104,8 @@ export default {
       ],
 
       vehicles: {},
+      seletedVehicle:{},
+      brta_registration_no:"",
       storeVehicles:{},
       registration_no:"",
     };
@@ -76,6 +113,24 @@ export default {
 
   
         methods: {
+          getdata(){
+            if(this.brta_registration_no !=''){
+              this.axios
+                      .get("vehicle/search-for-bill?brta_registration_number="+this.brta_registration_no)
+                      .then(response => {
+                        this.seletedVehicle=response.data.vehicles
+                        console.log(this.seletedVehicle);
+
+                      })
+                      .catch(error => {
+                        console.warn("API ! " + error);
+                      });
+            }
+            else{
+              this.seletedVehicle="";
+            }
+
+          },
 
             index(page = 1) {
                 this.axios.get('voucher/details?page=' + page)
