@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-container fluid pa-0 fill-height>
+    <v-container fluid pa-0 fill-height v-if="!authLayout">
       <v-layout>
         <v-flex>
           <v-navigation-drawer width="275px" permanent v-if="drawer">
@@ -53,15 +53,25 @@
         </v-flex>
       </v-layout>
     </v-container>
+    <v-container fluid pa-2 v-else-if="authLayout">
+      <v-layout>
+         <v-flex xs12>
+           <router-view></router-view>
+         </v-flex>
+      </v-layout>
+    </v-container>
+
   </v-app>
 </template>
 
 <script>
+import EventBus from './event-bus'
 export default {
   name: "App",
   data() {
     return {
       drawer: true,
+      authLayout:false,
       items: [
         {
           title: "Home",
@@ -120,11 +130,17 @@ export default {
   },
   methods:{
      changeRoute(routeName) {
-      const vm = this;
-      return vm.$router.push({ name: routeName });
+      return this.$router.push({ name: routeName });
     }
 
-  }
+  },
+  created()
+    {
+        EventBus.$on('authLayout',function(data){
+            this.authLayout = data
+            
+        }.bind(this));
+    }
 
 };
 </script>

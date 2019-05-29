@@ -13,6 +13,11 @@ export default new Router({
       component: () => import('../views/Home.vue')
     },
     {
+      path: '/login',
+      name: 'home',
+      component: () => import('../views/auth/SignIn.vue')
+    },
+    {
       path: '/bill-list',
       name: 'bill.index',
       component: () => import('../views/voucher/BillList.vue')

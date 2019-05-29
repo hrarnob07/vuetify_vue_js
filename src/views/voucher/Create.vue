@@ -65,17 +65,48 @@
 
                 <v-layout>
                     <v-flex xs9 sm9 md9 offset-sm1 offset-xm1>
-                        <v-select
-                                v-model="arr"
-                                label="Select several"
-                                tags
-                                chips
+<!--                        <v-select-->
+<!--                                v-model="arr"-->
+<!--                                label="Select several"-->
+<!--                                tags-->
+<!--                                chips-->
+<!--                                :items="seletedproduct"-->
+<!--                                item-text="label"-->
+<!--                                item-value="value"-->
+<!--                                outline-->
+<!--                                @change="getVoucherChange()"-->
+<!--                        ></v-select>-->
+
+                        <v-combobox
+                                v-model="select"
                                 :items="seletedproduct"
+                                label="I use a scoped slot"
                                 item-text="label"
                                 item-value="value"
+                                multiple
+                                @change="getVoucherChange"
+                                chips
                                 outline
-                                @change="getVoucherChange()"
-                        ></v-select>
+                        >
+                            <template v-slot:selection="data">
+                                <v-chip
+                                        :key="JSON.stringify(data.item)"
+                                        :selected="data.selected"
+                                        :disabled="data.disabled"
+                                        class="v-chip--select-multi"
+                                        @input="data.parent.selectItem(data.item)"
+                                >
+                                    <v-avatar
+                                            class="accent white--text"
+
+                                    ></v-avatar>
+                                    {{ data.item.label }}
+                                </v-chip>
+                            </template>
+                        </v-combobox>
+
+
+
 
                     </v-flex>
                 </v-layout>
@@ -130,7 +161,7 @@
                     voucher_items: ""
                 },
                 seletedproduct: [],
-                select: "",
+                select: [],
                 product_collection: [],
                 response: "",
                 vehicle_owner_info: {
@@ -159,7 +190,7 @@
         },
         methods: {
             getVoucherChange(){
-                console.log(this.product_collection);
+                console.log(this.select);
             },
             vehicle_details() {
                 this.axios
