@@ -1,5 +1,5 @@
 <template>
-    <v-container grid-list-md>
+    <v-container pa-0 ma-0 style="max-width:100%">
         <v-layout row wrap>
             <v-flex xs12 sm12 md12>
                 <v-card >

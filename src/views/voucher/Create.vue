@@ -1,6 +1,6 @@
 <template>
-<v-container grid-list-md text-xs-center>
-    <v-layout pa-2 ma-1 row warp>
+<v-container pa-0 ma-0 style="max-width:100%">
+    <v-layout pa-0 ma-0 row warp>
         <v-flex xs12>
             <v-card>
                 <v-layout>
@@ -77,35 +77,33 @@
 <!--                                @change="getVoucherChange()"-->
 <!--                        ></v-select>-->
 
-                        <v-combobox
-                                v-model="select"
-                                :items="seletedproduct"
-                                label="I use a scoped slot"
-                                item-text="label"
-                                item-value="value"
-                                multiple
-                                @change="getVoucherChange"
-                                chips
-                                outline
-                        >
-                            <template v-slot:selection="data">
-                                <v-chip
-                                        :key="JSON.stringify(data.item)"
-                                        :selected="data.selected"
-                                        :disabled="data.disabled"
-                                        class="v-chip--select-multi"
-                                        @input="data.parent.selectItem(data.item)"
-                                >
-                                    <v-avatar
-                                            class="accent white--text"
+<v-combobox
+        v-model="select"
+        :items="seletedproduct"
+        label="I use a scoped slot"
+        item-text="label"
+        item-value="value"
+        multiple
+        @change="getVoucherChange"
+        chips
+        outline
+>
+    <template v-slot:selection="data">
+        <v-chip
+                :key="JSON.stringify(data.item)"
+                :selected="data.selected"
+                :disabled="data.disabled"
+                class="v-chip--select-multi"
+                @input="data.parent.selectItem(data.item)"
+        >
+            <v-avatar
+                    class="accent white--text"
 
-                                    ></v-avatar>
-                                    {{ data.item.label }}
-                                </v-chip>
-                            </template>
-                        </v-combobox>
-
-
+            ></v-avatar>
+            {{ data.item.label }}
+        </v-chip>
+    </template>
+</v-combobox>
 
 
                     </v-flex>

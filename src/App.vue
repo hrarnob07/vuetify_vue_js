@@ -76,7 +76,7 @@ export default {
         {
           title: "Home",
           icon: "dashboard",
-          route: "/home"
+          route: "/"
         },
         {
           title: "Bill Create",

@@ -1,6 +1,6 @@
 <template>
-  <v-container grid-list-md text-xs-center>
-    <v-layout pa-2 ma-3>
+  <v-container pa-0 ma-0 style="max-width:100%">
+    <v-layout pa-0 ma-0>
       <v-flex xs12>
         <v-card>
           <v-toolbar flat color="white">
@@ -15,7 +15,7 @@
       </v-flex>
     </v-layout>
 
-    <v-layout pa-2 ma-3>
+    <v-layout pa-0 ma-0>
       <v-flex xs12>
         <v-card>
           <v-data-table  :headers="headers" :items="products.data" class="elevation-1">
@@ -36,7 +36,7 @@
                         small
                         color="teal darken-2"
                         class="mr-2"
-                        @click="vehicleDetails(props.item)"
+                        @click="ProductEdit(props.item)"
                       >edit</v-icon>
                     </span>
                   </template>
@@ -82,9 +82,9 @@ export default {
                     });
             },
 
-            link()
+            ProductEdit(item)
             {
-
+               this.$router.push({name:"product.edit",params:{id:item.products_id}});
             }
         },
         mounted() {

@@ -1,6 +1,7 @@
 <template>
-  <v-container grid-list-md text-xs-center>
-    <v-layout pa-2 ma-3>
+  <v-container pa-0 ma-0 style="max-width:100%">
+ <v-card>
+ <v-layout pa-0 ma-0>
       <v-flex xs12 >
         <v-card>
           <v-toolbar flat color="white">
@@ -27,7 +28,7 @@
       </v-flex>
     </v-layout>
 
-    <v-layout pa-2 ma-3>
+    <v-layout pa-0 ma-0>
       <v-flex xs12>
         <v-card >
           <v-data-table :headers="headers" :items="techinican.data" class="elevation-1">
@@ -48,7 +49,7 @@
                         small
                         color="teal darken-2"
                         class="mr-2"
-                        @click="vehicleDetails(props.item)"
+                        @click="editItem(props.item)"
                       >edit</v-icon>
                     </span>
                   </template>
@@ -61,6 +62,8 @@
         </v-card>
       </v-flex>
     </v-layout>
+    </v-card>
+   
   </v-container>
 </template>
 
@@ -92,8 +95,9 @@ export default {
         this.techinican = response.data.technicians;
       });
     },
-    editItem(index) {
-      alert(index);
+    editItem(item) {
+     console.log(item.users_id);
+     this.$router.push({name:'techinican.edit',params:{id:item.users_id}});
     }
   },
   mounted() {

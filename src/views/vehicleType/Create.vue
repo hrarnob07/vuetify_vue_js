@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-md text-xs-center>
+  <v-container pa-0 ma-0 style="max-width:100%" >
     <v-layout>
       <v-flex xs12 md12>
         <v-card>
@@ -11,7 +11,7 @@
           <v-divider></v-divider>
           <v-layout justify-center>
             <v-flex flat xs10 sm10>
-              <v-card justify-center>
+              <v-card justify-center flat>
                 <v-form @submit.prevent="store_vehicle_type" method="post">
                   <v-layout>
                     <v-flex xs12 sm6 offset-sm1 offset-xm1>

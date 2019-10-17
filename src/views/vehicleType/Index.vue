@@ -1,7 +1,7 @@
 <template>
 
-  <v-container grid-list-md text-xs-center>
-    <v-layout pa-2 ma-3>
+  <v-container pa-0 ma-0 style="max-width:100%">
+    <v-layout pa-0 ma-0>
       <v-flex xs12>
         <v-card>
                  <v-toolbar flat color="white">
@@ -18,7 +18,7 @@
     </v-layout>
 
 
-  <v-layout pa-2 ma-3>
+  <v-layout pa-0 ma-0>
     <v-flex xs12>
       <v-card>
          <v-data-table
@@ -31,7 +31,7 @@
                 
                 <td class="text-xs-left"> 
                     <v-tooltip top >  <template v-slot:activator="{ on }">
-                                         <span v-on="on"> <v-icon  small color="teal darken-2" class="mr-2" @click="EditVehicleType(props.item.vehicle_types_id)"  > edit </v-icon>
+                                         <span v-on="on"> <v-icon  small color="teal darken-2" class="mr-2" @click="EditVehicleType(props.item)"  > edit </v-icon>
                                           </span>
                                           </template>
                        <span>Edit Vehicle type</span>
@@ -56,9 +56,65 @@
 
     </v-flex>
   </v-layout>
-  </v-container>
 
-  
+<v-dialog
+      v-model="dialog"
+      width="30%"
+    >
+     
+
+     <v-layout >
+      <v-flex xs12 md12>
+        <v-card>
+          <v-card-title primary-title>
+            <div>
+              <h5 class="headline mb-0">Vehicle Type Edit</h5>
+            </div>
+          </v-card-title>
+          <v-divider></v-divider>
+          <v-layout justify-center>
+            <v-flex flat xs10 sm10>
+              <v-card justify-center flat pa-5>
+                <v-form @submit.prevent="store_vehicle_type">
+                  <v-layout>
+                    <v-flex xs12 sm6 offset-sm1 offset-xm1>
+                      <v-text-field
+                      
+                        type="text"
+                        label="vehicle type"
+                        v-model="vehicle.title"
+                        v-validate="'required|alpha|min:2'"
+                        data-vv-as="Vehicle type" 
+                        data-vv-name="vehicle_type"
+                        :error-messages="errors.collect('vehicle_type')"
+                      >
+                        
+                      </v-text-field>
+                    </v-flex>
+                  </v-layout>
+
+                  <v-layout>
+                    <v-flex sm6 xs12 md12 offset-sm1 offset-xm1>
+                      <v-btn
+                        justify-end
+                        :loading="loading"
+                        :disabled="loading"
+                        class="primary"
+                        type="submit"
+                      >Submit</v-btn>
+                    </v-flex>
+                  </v-layout>
+                </v-form>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-card>
+      </v-flex>
+    </v-layout>
+    </v-dialog>
+
+  </v-container>
+   
 </template>
 
 <script>
@@ -75,8 +131,15 @@
            { text: 'Delete', sortable:false,value: '' }
           
         ],
+        loading: false,
+        dialog:false,
+        id:'',
         
-        vehicleTypes:{}
+        vehicleTypes:{},
+        vehicle:{
+          title:'',
+        },
+
       }
     },
 
@@ -89,11 +152,50 @@
                         this.vehicleTypes=response.data.vehicleTypes;
                     });
             },
-            EditVehicleType(index){
-               
-                this.$router.push({name:"vehicleType.edit",params:{id:index}});
+            EditVehicleType(item){
+                   this.dialog = true;
+                   this.id = item.vehicle_types_id;
+                   this.vehicle.title = item.title;
+                  
 
-            }
+                // this.$router.push({name:"vehicleType.edit",params:{id:index}});
+
+            },
+      store_vehicle_type() {
+        this.loading = true;
+        if(this.vehicle.title==""){
+           
+            this.loading = false;
+        }
+        else{
+             this.axios
+                    .post(`vehicle-types/update/${this.id}`, this.vehicle)
+                    .then(response => {
+                       
+                        this.response = response.data;
+                         this.loading = false;
+                        if(this.response.status !== 400){
+                         this.dialog = false;
+                          this.$toast.success("updated");
+                          this.index();
+                          this.vehicle.title="";
+
+                        
+                        //  this.$router.push({  name: "vehicleType.index" }); 
+
+                        }else {
+                           this.text=" Vehicle type not updated.";
+                           this.snackbar=true;
+                           this.color="error";
+                        }
+                    })
+                    .catch(error => {
+                       this.loading = false;
+                        console.warn('API ! ' + error)
+                    })
+                     
+        }     
+    }
         },
         mounted() {
             this.index();

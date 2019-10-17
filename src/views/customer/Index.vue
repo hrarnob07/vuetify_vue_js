@@ -1,7 +1,7 @@
 <template>
 
-  <v-container grid-list-md text-xs-center>
-    <v-layout pa-2 ma-3>
+  <v-container pa-0 ma-0 style="max-width:100%">
+    <v-layout pa-0 ma-0>
       <v-flex xs12>
         <v-card>
                  <v-toolbar flat color="white">
@@ -22,7 +22,7 @@
     </v-layout>
 
 
-  <v-layout pa-2 ma-3>
+  <v-layout pa-0 ma-0>
     <v-flex xs12>
       <v-card>
          <v-data-table
@@ -100,7 +100,11 @@
             editItem(index){
               alert(index);
 
-            }
+            },
+           vehicleDetails(item)
+           {
+               this.$router.push({ name:'customer.vehicle_details', params:{id:item.vehicle_owners_id}});
+           }
         },
         mounted() {
             this.index();

@@ -5,14 +5,14 @@
         <v-card>
           <v-card-title primary-title>
             <div>
-              <h5 class="headline mb-0">Product and services create</h5>
+              <h5 class="headline mb-0">Products and services edit</h5>
             </div>
           </v-card-title>
           <v-divider></v-divider>
           <v-layout justify-center>
             <v-flex flat xs10 sm10>
               <v-card justify-center flat >
-                <v-form @submit.prevent="store_product_services" method="post">
+                <v-form @submit.prevent="update" method="post">
                   <v-layout>
                     <v-flex xs10  offset-xs1 offset-xm1>
                       <v-text-field
@@ -106,63 +106,58 @@
 </template>
 
 <script>
-export default {
-  data()
-        {
+    export default {
+        data() {
             return {
-                 product:{
+                product:{
                     name:'',
                     type:'',
-                    price:'',
-                    remarks:'',
-
+                    price:''
                 },
                  items: ['hardware_product', 'service'],
-
-                response:'',
-                snackbar:false,
-                color:"success",
-                text:"",
-                timeout:6000,
-                loading:false,
-
-
-                
-
+                id: this.$route.params.id,
             }
         },
-  methods: {
-    store_product_services() {
-        if(this.product.name==""){
-            this.text="Please enter valid data";
-            this.snackbar=true;
-            this.color="error";
-        }
-        else{
-              this.loading=true;
-              this.axios
-                    .post('product/store', this.product)
+        methods: {
+
+            edit()
+            {
+                this.axios
+                    .get(`product/edit/${this.id}`)
+                    .then(response => {
+
+                        this.product = response.data.product;
+                        console.log(this.product)
+
+                    })
+                    .catch(error => {
+                        console.warn('API ! ' + error)
+                    });
+
+            },
+            update(){
+                console.log(this.product)
+                this.axios
+                    .post(`product/update/${this.id}`, this.product)
                     .then(response => {
                         this.response = response.data;
+                        // console.log(this.response);
                         if(this.response.status !== 400){
-                            this.$router.push({ name: "product-services.index"});
+                            this.$toast.success(this.response.message);
+                            this.$router.push({name:"product-services.index"});
+
                         }else {
-                            this.text="Please Try again later!";
-                            this.snackbar=true;
-                            this.color="error";
+                            /* Error messages store in vuex state */
+                            this.$store.commit('mute_errors', this.response.message);
                         }
                     })
                     .catch(error => {
-                       this.text="Please Try again later!";
-                            this.snackbar=true;
-                            this.color="error";
+                        console.warn('API ! ' + error)
                     })
-           
+            }
+        },
+        mounted() {
+            this.edit();
         }
-        
-      
-     
     }
-  }
-};
 </script>

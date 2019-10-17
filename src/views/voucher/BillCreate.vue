@@ -1,6 +1,6 @@
 <template>
-  <v-container grid-list-md text-xs-center>
-    <v-layout pa-2 ma-1 row warp>
+  <v-container pa-0 ma-0 style="max-width:100%">
+    <v-layout pa-0 ma-0 row warp>
       <v-flex xs12>
         <v-card>
           <v-toolbar flat color="white">
@@ -50,7 +50,7 @@
 
 
 
-    <v-layout pa-2 ma-1>
+    <v-layout pa-0 ma-0>
       <v-flex xs12>
         <v-card>
           <v-data-table :headers="headers" :items="vehicles.data" class="elevation-1">

@@ -54,10 +54,20 @@ export default new Router({
       name: 'repairable.index',
       component: () => import('../views/vehiche/Repairable.vue')
     },
+      {
+          path: '/vehicle/bill-list/:id',
+          name: 'vehicle.bill',
+          component: () => import('../views/vehiche/BillList.vue')
+      },
     {
       path: '/customer',
       name: 'customer.index',
       component: () => import('../views/customer/Index.vue')
+    },
+      {
+      path: '/customer/vehicle/:id',
+      name: 'customer.vehicle_details',
+      component: () => import('../views/customer/VehicleDetails.vue')
     },
     // vehicle type route
     {
@@ -76,6 +86,7 @@ export default new Router({
       component: () => import('../views/vehicleType/Edit.vue')
     },
 
+
     {
       path: '/technician',
       name: 'technician.index',
@@ -85,6 +96,11 @@ export default new Router({
       path: '/technician/create',
       name: 'techinican.create',
       component: () => import('../views/technician/Create.vue')
+    },
+    {
+      path: '/technician/edit/:id',
+      name: 'techinican.edit',
+      component: () => import('../views/technician/Edit.vue')
     },
     // product and services route
     {
@@ -96,6 +112,11 @@ export default new Router({
       path: '/product-services/create',
       name: 'product-services.create',
       component: () => import('../views/product_services/Create.vue')
+    },
+    {
+      path: '/product-services/edit/:id',
+      name: 'product.edit',
+      component: () => import('../views/product_services/Edit.vue')
     },
 
 

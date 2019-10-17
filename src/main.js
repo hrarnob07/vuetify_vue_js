@@ -14,6 +14,9 @@ Vue.use(Vuetify)
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios);
+import VueIziToast from 'vue-izitoast';
+import 'izitoast/dist/css/iziToast.css';
+Vue.use(VueIziToast);
 
 
 // axios.defaults.baseURL = 'http://workshop.easyservice.xyz/garage_admin/api/v1/';
